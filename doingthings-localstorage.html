@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Storywriter</title>
+    <link rel="stylesheet" href="css/storywriter.css">
+    <script>
+      function loadStory() {
+        var storyName = document.getElementById("story_title").value;
+        var storyHTML = localStorage.getItem(storyName);
+        document.getElementById("story_editor").value = storyHTML;
+      }
+      function saveStory() {
+        var storyName = document.getElementById("story_title").value;
+        var storyHTML = document.getElementById("story_editor").value;
+        localStorage.setItem(storyName, storyHTML);
+      }
+      function displayStory() {
+        var storyName = document.getElementById("story_title").value;
+        document.getElementById("story_display").innerHTML = storyHTML;
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Storywriter</h1>
+    Title your story: <input id="story_title"></input>
+    <section>
+      <button onclick="loadStory()">Load Your Story</button>
+      <button onclick="saveStory()">Save Your Story</button>
+      <button onclick="displayStory()">Display Your Story</button>
+    </section>
+    <textarea id="story_editor" placeholder="This space reserved for your creativity."></textarea>
+    <section id="story_display"></section>
+  </body>
+</html>
