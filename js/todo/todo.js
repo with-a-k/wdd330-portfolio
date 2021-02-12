@@ -9,4 +9,4 @@ let TodoItemFactory = {
   }
 }
 
-document.querySelector('#add-item').addEventListener('touchend', TodoItemFactory.makeTodoItem);
+document.querySelector('#add-item').addEventListener('click', TodoItemFactory.makeTodoItem);
