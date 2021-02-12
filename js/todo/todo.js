@@ -1,4 +1,4 @@
-import {TodoItem} from './todo-item.js';
+import TodoItem from './todo-item.js';
 
 let TodoItemFactory = {
   index: 0,
