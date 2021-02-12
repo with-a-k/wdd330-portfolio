@@ -1,5 +1,6 @@
 export default class TodoItem {
   constructor(title, index, target, complete = false) {
+    console.log(title, index, target);
     this.title = title;
     this.index = index;
     this.complete = complete;
@@ -30,6 +31,6 @@ export default class TodoItem {
     item.appendChild(title);
     item.appendChild(confirm);
     target.appendChild(item);
-    this.existing = document.querySelector(`#${this.title}-${this.index}`);
+    this.existing = document.querySelector(`#${this.title.replace(/\s/g, '-')}-${this.index}`);
   }
 }
