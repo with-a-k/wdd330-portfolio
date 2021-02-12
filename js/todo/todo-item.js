@@ -1,4 +1,4 @@
-export class TodoItem {
+export default class TodoItem {
   constructor(title, index, target, complete = false) {
     this.title = title;
     this.index = index;
