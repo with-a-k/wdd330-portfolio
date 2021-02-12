@@ -30,5 +30,6 @@ export default class TodoItem {
     item.appendChild(title);
     item.appendChild(confirm);
     target.appendChild(item);
+    this.existing = document.querySelector(`#${this.title}-${this.index}`);
   }
 }
