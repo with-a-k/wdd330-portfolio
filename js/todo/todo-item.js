@@ -31,6 +31,6 @@ export default class TodoItem {
     item.appendChild(title);
     item.appendChild(confirm);
     target.appendChild(item);
-    this.existing = document.querySelector(`#${this.title.replace(/\s/g, '-')}-${this.index}`);
+    this.existing = item;
   }
 }
