@@ -4,7 +4,7 @@ let TodoItemFactory = {
   index: 0,
   makeTodoItem: function(e) {
     let title = document.querySelector('#item-name').value;
-    new TodoItem(title, index, document.querySelector('#list-display'));
+    new TodoItem(title, this.index, document.querySelector('#list-display'));
     this.index++;
   }
 }
