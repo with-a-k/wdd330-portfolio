@@ -17,7 +17,7 @@ export default class TodoItem {
 
   render(target) {
     let item = document.createElement('div');
-    item.id = `${this.title}-${this.index}`;
+    item.id = `${this.title.replace(/\s/, '-')}-${this.index}`;
     item.classList.add('todoItem');
     let confirm = document.createElement('button');
     confirm.id = `complete-${this.title}-${this.index}`;
