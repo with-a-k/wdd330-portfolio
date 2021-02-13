@@ -12,7 +12,7 @@ let TodoItemFactory = {
 function filterComplete() {
   let collection = document.querySelector('#list-display');
   Array.from(collection.children).forEach(function(tdi) {
-    if(tdi.classList.includes('complete')) {
+    if(Array.from(tdi.classList).includes('complete')) {
       tdi.classList.remove('hidden');
     } else {
       tdi.classList.add('hidden');
@@ -23,7 +23,7 @@ function filterComplete() {
 function filterIncomplete() {
   let collection = document.querySelector('#list-display');
   Array.from(collection.children).forEach(function(tdi) {
-    if(!tdi.classList.includes('complete')) {
+    if(!Array.from(tdi.classList).includes('complete')) {
       tdi.classList.remove('hidden');
     } else {
       tdi.classList.add('hidden');
@@ -44,8 +44,11 @@ function loadList() {
   document.getElementById("story_editor").value = storyHTML;
 }
 
-function saveStory() {
-  let storyName = document.getElementById("story_title").value;
+function saveList() {
+  let storyName = Array.from(document.getElementById("#list-display").children)
+    .map((item) => {
+
+    });
   var storyHTML = document.getElementById("story_editor").value;
   localStorage.setItem(storyName, storyHTML);
 }
