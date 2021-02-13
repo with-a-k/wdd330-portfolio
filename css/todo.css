@@ -11,3 +11,13 @@ body {
   display: grid;
   grid-template-columns: 60% 20% 20%;
 }
+
+.twoButtons {
+  display: grid;
+  grid-template-columns: 45% 45%;
+}
+
+.threeButtons {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+}
