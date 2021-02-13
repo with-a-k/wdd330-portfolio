@@ -38,6 +38,18 @@ function filterAll() {
   });
 }
 
+function loadList() {
+  let storyName = document.getElementById("story_title").value;
+  var storyHTML = localStorage.getItem(storyName);
+  document.getElementById("story_editor").value = storyHTML;
+}
+
+function saveStory() {
+  let storyName = document.getElementById("story_title").value;
+  var storyHTML = document.getElementById("story_editor").value;
+  localStorage.setItem(storyName, storyHTML);
+}
+
 document.querySelector('#add-item').addEventListener('click', TodoItemFactory.makeTodoItem);
 document.querySelector('').addEventListener('click', filterComplete);
 document.querySelector('').addEventListener('click', filterAll);

@@ -1,6 +1,5 @@
 export default class TodoItem {
   constructor(title, index, target, complete = false) {
-    console.log(title, index, target);
     this.title = title;
     this.index = index;
     this.complete = complete;
