@@ -30,7 +30,7 @@ export default class TodoItem {
     let remove = document.createElement('button');
     remove.id = `remove-${this.title}-${this.index}`;
     remove.innerHTML = "Remove";
-    remove.onclick = this.remove.bind(this);
+    remove.onclick = this.removeSelf.bind(this);
     //appendChild returns the child, so these can't be chained
     item.appendChild(title);
     item.appendChild(confirm);
