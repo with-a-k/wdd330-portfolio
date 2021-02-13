@@ -9,4 +9,26 @@ let TodoItemFactory = {
   }
 }
 
+function filterComplete() {
+  let collection = document.querySelector('#list-display');
+  Array.from(collection.children).forEach(function(tdi) {
+    if(tdi.classList.includes('complete')) {
+      tdi.classList.remove('hidden');
+    } else {
+      tdi.classList.add('hidden');
+    }
+  });
+}
+
+function filterIncomplete() {
+  let collection = document.querySelector('#list-display');
+  Array.from(collection.children).forEach(function(tdi) {
+    if(!tdi.classList.includes('complete')) {
+      tdi.classList.remove('hidden');
+    } else {
+      tdi.classList.add('hidden');
+    }
+  });
+}
+
 document.querySelector('#add-item').addEventListener('click', TodoItemFactory.makeTodoItem);

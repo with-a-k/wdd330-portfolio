@@ -20,17 +20,25 @@ export default class TodoItem {
     let item = document.createElement('div');
     item.id = `${this.title.replace(/\s/g, '-')}-${this.index}`;
     item.classList.add('todoItem');
+    let title = document.createElement('h5');
+    title.innerHTML = this.title;
+    title.classList.add('todoTitle');
     let confirm = document.createElement('button');
     confirm.id = `complete-${this.title}-${this.index}`;
     confirm.innerHTML = "Finished?";
     confirm.onclick = this.crossOut.bind(this);
-    let title = document.createElement('h5');
-    title.innerHTML = this.title;
-    title.classList.add('todoTitle');
+    let remove = document.createElement('button');
+    remove.id = `remove-${this.title}-${this.index}`;
+    remove.innerHTML = "Remove";
+    remove.onclick = this.remove.bind(this);
     //appendChild returns the child, so these can't be chained
     item.appendChild(title);
     item.appendChild(confirm);
     target.appendChild(item);
     this.existing = item;
+  }
+
+  removeSelf() {
+    this.existing.parentNode.removeChild(this.existing);
   }
 }

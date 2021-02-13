@@ -6,3 +6,8 @@ body {
   color: #235789;
   text-decoration: line-through;
 }
+
+.todoItem {
+  display: grid;
+  grid-template-columns: title title title finish remove;
+}
