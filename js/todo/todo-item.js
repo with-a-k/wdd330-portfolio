@@ -34,6 +34,7 @@ export default class TodoItem {
     //appendChild returns the child, so these can't be chained
     item.appendChild(title);
     item.appendChild(confirm);
+    item.appendChild(remove);
     target.appendChild(item);
     this.existing = item;
   }

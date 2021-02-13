@@ -9,5 +9,5 @@ body {
 
 .todoItem {
   display: grid;
-  grid-template-columns: title title title finish remove;
+  grid-template-columns: 60% 20% 20%;
 }
