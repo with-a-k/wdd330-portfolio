@@ -2,7 +2,7 @@ body {
   background-color: #fdfffc;
 }
 
-.hidden {
+.todoItem.hidden {
   display: none;
 }
 
