@@ -1,7 +1,7 @@
 export default class TodoItem {
-  constructor(title, index, target, complete = false) {
+  constructor(title, target, complete = false, stamp = Date.now()) {
     this.title = title;
-    this.index = index;
+    this.stamp = stamp;
     this.complete = complete;
     this.existing = false;
     if (this.title === "") {
@@ -17,17 +17,17 @@ export default class TodoItem {
 
   render(target) {
     let item = document.createElement('div');
-    item.id = `${this.title.replace(/\s/g, '-')}-${this.index}`;
+    item.id = `${this.title.replace(/\s/g, '-')}|${this.stamp}`;
     item.classList.add('todoItem');
     let title = document.createElement('p');
     title.innerHTML = this.title;
     title.classList.add('todoTitle');
     let confirm = document.createElement('button');
-    confirm.id = `complete-${this.title}-${this.index}`;
+    confirm.id = `complete-${this.title}|${this.stamp}`;
     confirm.innerHTML = "Finished?";
     confirm.onclick = this.crossOut.bind(this);
     let remove = document.createElement('button');
-    remove.id = `remove-${this.title}-${this.index}`;
+    remove.id = `remove-${this.title}|${this.stamp}`;
     remove.innerHTML = "Remove";
     remove.onclick = this.removeSelf.bind(this);
     //appendChild returns the child, so these can't be chained

@@ -1,15 +1,15 @@
 import TodoItem from './todo-item.js';
 
 let TodoItemFactory = {
-  index: 0,
   makeTodoItem: function(e) {
     let title = document.querySelector('#item-name').value;
-    new TodoItem(title, this.index, document.querySelector('#list-display'));
+    new TodoItem(title, document.querySelector('#list-display'));
     this.index++;
   }
 }
 
 function filterComplete() {
+  console.log('filterComplete was invoked.');
   let collection = document.querySelector('#list-display');
   Array.from(collection.children).forEach(function(tdi) {
     if(Array.from(tdi.classList).includes('complete')) {
