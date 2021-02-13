@@ -51,6 +51,6 @@ function saveStory() {
 }
 
 document.querySelector('#add-item').addEventListener('click', TodoItemFactory.makeTodoItem);
-document.querySelector('').addEventListener('click', filterComplete);
-document.querySelector('').addEventListener('click', filterAll);
-document.querySelector('').addEventListener('click', filterIncomplete);
+document.querySelector('#show-complete').addEventListener('click', filterComplete);
+document.querySelector('#show-all').addEventListener('click', filterAll);
+document.querySelector('#show-incomplete').addEventListener('click', filterIncomplete);
