@@ -2,6 +2,10 @@ body {
   background-color: #fdfffc;
 }
 
+.hidden {
+  display: none;
+}
+
 .complete p {
   color: #235789;
   text-decoration: line-through;
