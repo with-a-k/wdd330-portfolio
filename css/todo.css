@@ -2,7 +2,7 @@ body {
   background-color: #fdfffc;
 }
 
-.complete {
+.complete:1st-child {
   color: #235789;
   text-decoration: line-through;
 }
