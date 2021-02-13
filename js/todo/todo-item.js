@@ -20,7 +20,7 @@ export default class TodoItem {
     let item = document.createElement('div');
     item.id = `${this.title.replace(/\s/g, '-')}-${this.index}`;
     item.classList.add('todoItem');
-    let title = document.createElement('h5');
+    let title = document.createElement('p');
     title.innerHTML = this.title;
     title.classList.add('todoTitle');
     let confirm = document.createElement('button');
