@@ -31,4 +31,14 @@ function filterIncomplete() {
   });
 }
 
+function filterAll() {
+  let collection = document.querySelector('#list-display');
+  Array.from(collection.children).forEach(function(tdi) {
+    tdi.classList.remove('hidden');
+  });
+}
+
 document.querySelector('#add-item').addEventListener('click', TodoItemFactory.makeTodoItem);
+document.querySelector('').addEventListener('click', filterComplete);
+document.querySelector('').addEventListener('click', filterAll);
+document.querySelector('').addEventListener('click', filterIncomplete);

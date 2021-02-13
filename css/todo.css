@@ -12,6 +12,11 @@ body {
   grid-template-columns: 60% 20% 20%;
 }
 
+.entryForm {
+  display: grid;
+  grid-template-columns: 70% 20%;
+}
+
 .twoButtons {
   display: grid;
   grid-template-columns: 45% 45%;
