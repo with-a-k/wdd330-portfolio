@@ -2,12 +2,12 @@ import TodoItem from './todo-item.js';
 
 function loadList() {
   let todoList = localStorage.getItem('saved-tdl').split(";;");
-  console.log(todoList);
   let target = document.querySelector('#list-display');
   target.replaceChildren();
   todoList.forEach(function(item) {
     console.log(item);
     let name = item.slice(0, item.indexOf('|')).replace(/--/g, '-').replace(/[^-](-)/g, ' ');
+    console.log(name);
     let comp = item.endsWith('c');
     let stamp = item.slice(item.indexOf('|')+1, comp ? item.length-1 : item.length);
     new TodoItem(name, target, comp, stamp);
