@@ -6,6 +6,7 @@ function loadList() {
 }
 
 function saveList() {
+  console.log('saveList was invoked');
   let todoList = Array.from(document.getElementById("list-display").children)
     .map((item) => {
       return {
