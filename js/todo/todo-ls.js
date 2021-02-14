@@ -1,5 +1,6 @@
 function loadList() {
   let todoList = localStorage.getItem('saved-tdl');
+  console.log(todoList);
   todoList.forEach(function(item) {
     console.log(item);
   });
