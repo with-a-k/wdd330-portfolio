@@ -19,7 +19,7 @@ function saveList() {
   let todoList = Array.from(document.getElementById("list-display").children)
     .map((item) => {
       let complete = Array.from(item.classList).includes('complete');
-      return `${item.id}${complete ? 'c' : ''}
+      return `${item.id}${complete ? 'c' : ''}`
     })
     .join(';;');
   console.log(todoList);
