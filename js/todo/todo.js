@@ -1,4 +1,5 @@
 import TodoItem from './todo-item.js';
+import {loadList, saveList} from './todo-ls.js';
 
 let TodoItemFactory = {
   makeTodoItem: function(e) {
@@ -38,22 +39,9 @@ function filterAll() {
   });
 }
 
-function loadList() {
-  let storyName = document.getElementById("story_title").value;
-  var storyHTML = localStorage.getItem(storyName);
-  document.getElementById("story_editor").value = storyHTML;
-}
-
-function saveList() {
-  let storyName = Array.from(document.getElementById("#list-display").children)
-    .map((item) => {
-
-    });
-  var storyHTML = document.getElementById("story_editor").value;
-  localStorage.setItem(storyName, storyHTML);
-}
-
 document.querySelector('#add-item').addEventListener('click', TodoItemFactory.makeTodoItem);
 document.querySelector('#show-complete').addEventListener('click', filterComplete);
 document.querySelector('#show-all').addEventListener('click', filterAll);
 document.querySelector('#show-incomplete').addEventListener('click', filterIncomplete);
+document.querySelector('#load-list').addEventListener('click', loadList);
+document.querySelector('#save-list').addEventListener('click', saveList);

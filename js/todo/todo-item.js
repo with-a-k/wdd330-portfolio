@@ -23,11 +23,11 @@ export default class TodoItem {
     title.innerHTML = this.title;
     title.classList.add('todoTitle');
     let confirm = document.createElement('button');
-    confirm.id = `complete-${this.title}|${this.stamp}`;
+    confirm.id = `complete-${this.title.replace(/\s/g, '-')}|${this.stamp}`;
     confirm.innerHTML = "Finished?";
     confirm.onclick = this.crossOut.bind(this);
     let remove = document.createElement('button');
-    remove.id = `remove-${this.title}|${this.stamp}`;
+    remove.id = `remove-${this.title.replace(/\s/g, '-')}|${this.stamp}`;
     remove.innerHTML = "Remove";
     remove.onclick = this.removeSelf.bind(this);
     //appendChild returns the child, so these can't be chained
