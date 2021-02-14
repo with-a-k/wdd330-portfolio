@@ -1,0 +1,51 @@
+<!doctype html>
+<style>
+  .trail { /* className for the trail elements */
+    position: absolute;
+    height: 6px; width: 6px;
+    border-radius: 3px;
+    background: teal;
+  }
+  body {
+    height: 300px;
+  }
+</style>
+
+<script>
+  let trailCounter = 0;
+  let trails = [];
+  let loader = setInterval(function() {
+      if (document.readyState !== "complete") return;
+    clearInterval(loader);
+    document.body.addEventListener("mousemove", trail)
+  }, 300);
+
+  let trail = function(e) {
+       if (trailCounter < 25) {
+         makeTrailer(e.pageX, e.pageY);
+        trailCounter++;
+     } else {
+        let mover = trails.shift();
+        mover.style.left = `${e.pageX}px`;
+        mover.style.top = `${e.pageY}px`;
+        trails.push(mover);
+     }
+  }
+
+  let makeTrailer = function (x, y) {
+       let trailerContainer = document.getElementById("trailer-container");
+     let newTrail = document.createElement('div');
+     newTrail.classList.add("trail");
+     newTrail.style.left = `${x}px`;
+     newTrail.style.top = `${y}px`;
+     trailerContainer.appendChild(newTrail);
+     trails.push(newTrail);
+  }
+</script>
+
+<body>
+  <div class="trailer-container" id="trailer-container">
+
+  </div>
+  <a href="index.html">Back to front page</a> 
+</body>
