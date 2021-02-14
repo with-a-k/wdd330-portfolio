@@ -1,5 +1,5 @@
 function loadList() {
-  let todoList = localStorage.getItem(savedList);
+  let todoList = localStorage.getItem('saved-tdl');
 }
 
 function saveList() {
@@ -10,7 +10,7 @@ function saveList() {
         timestamp: item.id.substr(item.id.indexOf('|')+1)
       };
     });
-  localStorage.setItem(savedList, todoList);
+  localStorage.setItem('saved-tdl', todoList);
 }
 
 export {loadList, saveList};

@@ -10,7 +10,6 @@ let TodoItemFactory = {
 }
 
 function filterComplete() {
-  console.log('filterComplete was invoked.');
   let collection = document.querySelector('#list-display');
   Array.from(collection.children).forEach(function(tdi) {
     if(Array.from(tdi.classList).includes('complete')) {
