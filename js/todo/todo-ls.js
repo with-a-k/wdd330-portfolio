@@ -3,7 +3,7 @@ function loadList() {
 }
 
 function saveList() {
-  let todoList = Array.from(document.getElementById("#list-display").children)
+  let todoList = Array.from(document.getElementById("list-display").children)
     .map((item) => {
       return {
         name: Array.from(item.children)[0].innerHTML,
