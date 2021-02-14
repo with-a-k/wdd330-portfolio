@@ -17,17 +17,20 @@ export default class TodoItem {
 
   render(target) {
     let item = document.createElement('div');
-    item.id = `${this.title.replace(/\s/g, '-')}|${this.stamp}`;
+    item.id = `${this.title.replace(/-/g, '--').replace(/\s/g, '-')}|${this.stamp}`;
     item.classList.add('todoItem');
+    if (this.complete) {
+      item.classList.add('complete');
+    }
     let title = document.createElement('p');
     title.innerHTML = this.title;
     title.classList.add('todoTitle');
     let confirm = document.createElement('button');
-    confirm.id = `complete-${this.title.replace(/\s/g, '-')}|${this.stamp}`;
+    confirm.id = `complete-${this.title.replace(/-/g, '--').replace(/\s/g, '-')}|${this.stamp}`;
     confirm.innerHTML = "Finished?";
     confirm.onclick = this.crossOut.bind(this);
     let remove = document.createElement('button');
-    remove.id = `remove-${this.title.replace(/\s/g, '-')}|${this.stamp}`;
+    remove.id = `remove-${this.title.replace(/-/g, '--').replace(/\s/g, '-')}|${this.stamp}`;
     remove.innerHTML = "Remove";
     remove.onclick = this.removeSelf.bind(this);
     //appendChild returns the child, so these can't be chained

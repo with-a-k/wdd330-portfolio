@@ -7,7 +7,7 @@ function loadList() {
   target.replaceChildren();
   todoList.forEach(function(item) {
     console.log(item);
-    let name = item.slice(0, item.indexOf('|'));
+    let name = item.slice(0, item.indexOf('|')).replace(/--/g, '-').replace(/[^-](-)/g, ' ');
     let comp = item.endsWith('c');
     let stamp = item.slice(item.indexOf('|')+1, comp ? item.length-1 : item.length);
     new TodoItem(name, target, comp, stamp);
