@@ -7,8 +7,8 @@ function saveList() {
     .map((item) => {
       return {
         name: Array.from(item.children)[0].innerHTML,
-        timestamp: item.id.substr(item.id.indexOf('|')+1);
-      }
+        timestamp: item.id.substr(item.id.indexOf('|')+1)
+      };
     });
   localStorage.setItem(savedList, todoList);
 }
