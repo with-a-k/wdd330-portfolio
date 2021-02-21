@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+<style>
+.board{
+    display:grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+    justify-content: center;
+
+}
+.board > div{
+border: 1px solid;
+text-align:center;
+
+}
+.correctBoard{
+    margin-top:10px;
+    display:grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+    justify-content: center;
+
+}
+.bottomBorder{
+border-bottom: 1px solid;
+text-align:center;
+
+}
+.rightborder{
+    border-right: 1px solid;
+    text-align:center;
+}
+div{
+    text-align:center;
+}
+</style>
+
+</head>
+<body>
+
+
+    <section class="correctBoard">
+            <div class="bottomBorder rightborder"></div>
+            <div class="bottomBorder rightborder"></div>
+            <div class="bottomBorder"></div>
+            <div class="bottomBorder rightborder"></div>
+            <div class="bottomBorder rightborder"></div>
+            <div class="bottomBorder"></div>
+            <div class="rightborder"></div>
+            <div class="rightborder"></div>
+            <div></div>
+        </section>
+    <button class="reset">Reset</button>
+<script>
+const divboard = document.querySelector(".correctBoard");
+const player1 = "x";
+const player2 = "o";
+var player = player1;
+let check = true;
+const resetButton = document.querySelector(".reset");
+function callReset(){
+    for(let i = 0; i < divboard.children.length; i++){
+        divboard.children[i].innerText = "";
+    }
+}
+
+function screem(event){
+  //Skip adding a mark if the area is already filled.
+  if (event.target.innerHTML === "X" || event.target.innerHTML === "O") {
+    return;
+  }
+  event.target.innerHTML = player;
+    if(check == true){
+        player = player2;
+        check = false;
+    }
+    else{ player = player1;
+        check = true;}
+
+}
+
+function checkWin() {
+  const divBoard = document.querySelector('.correctBoard');
+  let lines = getLines();
+  for (index in lines) {
+    let winner = allSame(lines[index]);
+    if (winner && winner !== "" && winner !== "0") {
+      alert(`${winner} has won the game!`);
+    }
+  }
+}
+//returns an array of all 8 possible winning lines
+function getLines() {
+  const divBoard = document.querySelector('.correctBoard');
+  return [
+    [divBoard.children[0].innerText, divBoard.children[1].innerText, divBoard.children[2].innerText],
+    [divBoard.children[3].innerText, divBoard.children[4].innerText, divBoard.children[5].innerText],
+    [divBoard.children[6].innerText, divBoard.children[7].innerText, divBoard.children[8].innerText],
+    [divBoard.children[0].innerText, divBoard.children[3].innerText, divBoard.children[6].innerText],
+    [divBoard.children[1].innerText, divBoard.children[4].innerText, divBoard.children[7].innerText],
+    [divBoard.children[2].innerText, divBoard.children[5].innerText, divBoard.children[8].innerText],
+    [divBoard.children[0].innerText, divBoard.children[4].innerText, divBoard.children[8].innerText],
+    [divBoard.children[2].innerText, divBoard.children[4].innerText, divBoard.children[6].innerText],
+  ]
+};
+//Checks if every item in an array is the same
+function allSame(array) {
+  let first = array[0];
+  for (index in array) {
+    if (array[index] !== first) {
+      return false;
+    }
+  }
+  return first;
+}
+//Checks for a draw
+function checkFull() {
+  const divBoard = document.querySelector('.correctBoard');
+  const children = Array.from(divBoard.children);
+  let empty = children.filter(function(child) {
+    return child.innerText !== "X" && child.innerText !== "O";
+  });
+  if (empty.length === 0) {
+    alert("This game has drawn.");
+  }
+}
+
+divboard.addEventListener("click",screem);
+resetButton.addEventListener("click",callReset);
+</script>
+</body>
+</html>
