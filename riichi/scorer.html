@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Eloquent Life</title>
+    <link rel="stylesheet" href="../css/riichi.css">
+    <script type="module" src="./js/riichi.js"></script>
+  </head>
+  <body>
+    <div id="tile-options">
+      <div class="play-area">
+        <div class="dora-indicators">
+        </div>
+        <div class="hand">
+          <div class="closed-tiles">
+          </div>
+          <div class="open-melds">
+          </div>
+          <div class="agari">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="score-options">
+      <form id="conditions">
+        <p class="condition-header">Current Round</p><br>
+          <input type="radio" id="round-east" name="round" value="east">
+          <label for="east">East</label>
+          <input type="radio" id="round-south" name="round" value="south">
+          <label for="south">South</label>
+          <input type="radio" id="round-west" name="round" value="west">
+          <label for="west">West</label><br>
+        <p class="condition-header">Current Seating</p><br>
+          <input type="radio" id="seat-east" name="seat" value="east">
+          <label for="east">East</label>
+          <input type="radio" id="seat-south" name="seat" value="south">
+          <label for="south">South</label>
+          <input type="radio" id="seat-west" name="seat" value="west">
+          <label for="west">West</label><br>
+          <input type="radio" id="seat-north" name="seat" value="north">
+          <label for="north">North</label><br>
+        <p class="condition-header">Win Method</p><br>
+          <input type="radio" id="tsumo" name="method" value="tsumo">
+          <label for="tsumo">Tsumo</label>
+          <input type="radio" id="ron" name="method" value="ron">
+          <label for="ron">Ron</label>
+        <p class="condition-header">Win Timing</p><br>
+          <input type="radio" id="normal" name="timing" value="normal">
+          <label for="normal">Normal</label>
+          <input type="radio" id="tenhou" name="timing" value="tenhou">
+          <label for="first-draw">First Draw</label>
+          <input type="radio" id="rinshan" name="timing" value="rinshan">
+          <label for="after-quad">After a Quad</label><br>
+          <input type="radio" id="chankan" name="timing" value="chankan">
+          <label for="steal-quad">Steal a Quad</label>
+          <input type="radio" id="haitei" name="timing" value="haitei">
+          <label for="last-draw">Last Draw</label>
+          <input type="radio" id="houtei" name="timing" value="houtei">
+          <label for="last-discard">Last Discard</label>
+      </form>
+    </div>
+    <div id="score-results">
+      <p class="hfcount">0 Han 0 Fu</p>
+      <ul id="scored-yaku">
+      </ul>
+      <p class="final-score"></p>
+    </div>
+  </body>
+</html>

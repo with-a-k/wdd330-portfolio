@@ -1,4 +1,4 @@
-class Tile {
+export default class Tile {
   constructor(suit, number, variant = '', visibility = 'closed') {
     this.suit = suit;
     this.number = number;
@@ -11,8 +11,8 @@ class Tile {
       console.log('Invalid tile suit: must be m, s, p, h');
       return false;
     }
-    if (!(this.variant in ['', 'red'])) {
-      console.log('Invalid variant: must be empty or red');
+    if (!(this.variant in ['', 'r'])) {
+      console.log('Invalid variant: must be empty or r');
       return false;
     }
     if (this.suit !== 'h') {
@@ -31,7 +31,19 @@ class Tile {
     } else {
       if (!(this.number in ['E', 'S', 'W', 'N', 'H', 'G', 'R'])) {
         console.log('Invalid honor type: must be E, S, W, N, H, G, R');
+        return false;
       }
     }
+  }
+
+  display(target) {
+    if (this.visibility = "closed") {
+      let assetURL = `../assets/tiles/nohint/closed.svg`;
+    } else {
+      let assetURL = `../assets/tiles/nohint/${this.number}${this.suit}${this.variant}.svg`;
+    }
+    let tileHTML = document.createElement('div');
+    let tileImage = document.createElement('img');
+    let tileHint = document.createElement('div');
   }
 }

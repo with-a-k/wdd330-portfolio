@@ -393,3 +393,5 @@ let yakuList = [
     ["closed", "yakuman", "lucky"]
   )
 ];
+
+export default yakuList;
