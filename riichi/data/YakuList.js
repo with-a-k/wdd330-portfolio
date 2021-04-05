@@ -10,8 +10,8 @@ class Yaku {
   }
 }
 
-let yakuList = [
-  new Yaku(
+let yakuDict = {
+  tsumo: new Yaku(
     "Fully Closed Hand",
     "Menzenchin Tsumohou",
     "門前清自摸和",
@@ -20,7 +20,7 @@ let yakuList = [
     0,
     ["closed", "draws"]
   ),
-  new Yaku(
+  riichi: new Yaku(
     "Riichi",
     "Riichi",
     "立直",
@@ -31,7 +31,7 @@ let yakuList = [
     0,
     ["closed", "riichi"]
   ),
-  new Yaku(
+  wriichi: new Yaku(
     "Double Riichi",
     "Daburu Riichi",
     "両立直",
@@ -42,7 +42,7 @@ let yakuList = [
     0,
     ["closed", "riichi", "lucky"]
   ),
-  new Yaku(
+  oneshot: new Yaku(
     "One-Shot",
     "Ippatsu",
     "一発",
@@ -51,7 +51,7 @@ let yakuList = [
     0,
     ["closed", "riichi", "lucky"]
   ),
-  new Yaku(
+  simples: new Yaku(
     "All Simples",
     "Tan'yao",
     "断幺九",
@@ -61,7 +61,7 @@ let yakuList = [
     1,
     ["open"]
   ),
-  new Yaku(
+  pinfu: new Yaku(
     "Pinfu",
     "Pinfu",
     "平和",
@@ -72,7 +72,7 @@ let yakuList = [
     0,
     ["closed", "sequences"]
   ),
-  new Yaku(
+  iipeikou: new Yaku(
     "Twin Sequences",
     "Iipeikou",
     "一盃口",
@@ -82,7 +82,7 @@ let yakuList = [
     0,
     ["closed", "sequences"]
   ),
-  new Yaku(
+  straight: new Yaku(
     "Full Straight",
     "Ittsuu",
     "一通",
@@ -91,7 +91,7 @@ let yakuList = [
     1,
     ["semi-open", "sequences"]
   ),
-  new Yaku(
+  yakuhai: new Yaku(
     "Yakuhai",
     "Yakuhai",
     "役牌",
@@ -102,7 +102,7 @@ let yakuList = [
     1,
     ["open", "honors"]
   ),
-  new Yaku(
+  mixseq: new Yaku(
     "Mixed Color Sequence",
     "Sanshoku Doujun",
     "三色同順",
@@ -111,7 +111,7 @@ let yakuList = [
     1,
     ["semi-open", "sequences"]
   ),
-  new Yaku(
+  mixtri: new Yaku(
     "Mixed Color Triplets",
     "Sanshoku Doukou",
     "三色同刻",
@@ -120,7 +120,7 @@ let yakuList = [
     2,
     ["open", "triplets"]
   ),
-  new Yaku(
+  triplets: new Yaku(
     "All Triplets",
     "Toitoihou",
     "対々和",
@@ -129,7 +129,7 @@ let yakuList = [
     2,
     ["open", "triplets"]
   ),
-  new Yaku(
+  sanankou: new Yaku(
     "Three Concealed Triplets",
     "Sanankou",
     "三暗刻",
@@ -138,7 +138,7 @@ let yakuList = [
     2,
     ["open", "triplets"]
   ),
-  new Yaku(
+  sankan: new Yaku(
     "Three Quads",
     "Sankantsu",
     "三槓子",
@@ -147,7 +147,7 @@ let yakuList = [
     2,
     ["open", "triplets"]
   ),
-  new Yaku(
+  halfout: new Yaku(
     "Half-Outside Hand",
     "Chanta",
     "全帯",
@@ -156,7 +156,7 @@ let yakuList = [
     1,
     ["open", "terminals", "honors"]
   ),
-  new Yaku(
+  outside: new Yaku(
     "Full-Outside Hand",
     "Junchan",
     "純全",
@@ -165,7 +165,7 @@ let yakuList = [
     2,
     ["open", "terminals"]
   ),
-  new Yaku(
+  ryan: new Yaku(
     "Two Twin Sequences",
     "Ryanpeikou",
     "純全",
@@ -175,7 +175,7 @@ let yakuList = [
     0,
     ["closed", "sequences"]
   ),
-  new Yaku(
+  ssg: new Yaku(
     "Little Three Dragons",
     "Shousangen",
     "小三元",
@@ -184,7 +184,7 @@ let yakuList = [
     2,
     ["open", "honors"]
   ),
-  new Yaku(
+  termnhon: new Yaku(
     "Terminals And Honors",
     "Honroutou",
     "混老頭",
@@ -193,7 +193,7 @@ let yakuList = [
     2,
     ["open", "honors", "terminals"]
   ),
-  new Yaku(
+  halfflush: new Yaku(
     "Half-Flush",
     "Hon'itsu",
     "混一色",
@@ -202,7 +202,7 @@ let yakuList = [
     2,
     ["semi-open", "honors", "suits"]
   ),
-  new Yaku(
+  fullflush: new Yaku(
     "Full Flush",
     "Hon'itsu",
     "混一色",
@@ -211,7 +211,7 @@ let yakuList = [
     5,
     ["semi-open", "suits"]
   ),
-  new Yaku(
+  chiitoi: new Yaku(
     "Seven Pairs",
     "Chiitoitsu",
     "七対子",
@@ -221,7 +221,7 @@ let yakuList = [
     0,
     ["closed", "exceptions"]
   ),
-  new Yaku(
+  rinshan: new Yaku(
     "After a Kan",
     "Rinshan Kaihou",
     "嶺上開花",
@@ -230,7 +230,7 @@ let yakuList = [
     1,
     ["open", "draws", "lucky"]
   ),
-  new Yaku(
+  undersea: new Yaku(
     "Under the Sea",
     "Haitei Raoyue",
     "海底撈月",
@@ -239,7 +239,7 @@ let yakuList = [
     1,
     ["open", "draws", "lucky"]
   ),
-  new Yaku(
+  riverbed: new Yaku(
     "Under the River",
     "Houtei Raoyui",
     "河底撈魚",
@@ -248,7 +248,7 @@ let yakuList = [
     1,
     ["open", "discards", "lucky"]
   ),
-  new Yaku(
+  chankan: new Yaku(
     "Robbing a Quad",
     "Chankan",
     "搶槓",
@@ -258,7 +258,7 @@ let yakuList = [
     1,
     ["open", "exceptions"]
   ),
-  new Yaku(
+  nagashi: new Yaku(
     "Nagashi Mangan",
     "Nagashi Mangan",
     "流し満貫",
@@ -271,7 +271,7 @@ let yakuList = [
     5,
     ["open", "exceptions"]
   ),
-  new Yaku(
+  orphans: new Yaku(
     "Thirteen Orphans",
     "Kokushi Musou",
     "国士無双",
@@ -283,7 +283,7 @@ let yakuList = [
     0,
     ["closed", "exceptions", "yakuman"]
   ),
-  new Yaku(
+  dsg: new Yaku(
     "Great Three Dragons",
     "Daisangen",
     "大三元",
@@ -294,7 +294,7 @@ let yakuList = [
     13,
     ["open", "honors", "liability", "yakuman"]
   ),
-  new Yaku(
+  suuankou: new Yaku(
     "Four Concealed Triplets",
     "Suuankou",
     "四暗刻",
@@ -305,7 +305,7 @@ let yakuList = [
     0,
     ["closed", "yakuman"]
   ),
-  new Yaku(
+  smallwind: new Yaku(
     "Little Four Winds",
     "Shousuushii",
     "小四喜",
@@ -314,7 +314,7 @@ let yakuList = [
     13,
     ["open", "honors", "yakuman"]
   ),
-  new Yaku(
+  bigwind: new Yaku(
     "Great Four Winds",
     "Daisuushii",
     "大四喜",
@@ -323,7 +323,7 @@ let yakuList = [
     26,
     ["open", "honors", "yakuman"]
   ),
-  new Yaku(
+  honors: new Yaku(
     "All Honors",
     "Tsuuiisou",
     "字一色",
@@ -332,7 +332,7 @@ let yakuList = [
     13,
     ["open", "honors", "yakuman"]
   ),
-  new Yaku(
+  green: new Yaku(
     "All Green",
     "Ryuuiisou",
     "緑一色",
@@ -343,7 +343,7 @@ let yakuList = [
     13,
     ["open", "yakuman"]
   ),
-  new Yaku(
+  terminals: new Yaku(
     "All Terminals",
     "Chinroutou",
     "清老頭",
@@ -352,7 +352,7 @@ let yakuList = [
     13,
     ["open", "yakuman"]
   ),
-  new Yaku(
+  gates: new Yaku(
     "Nine Gates",
     "Chuuren Poutou",
     "九連宝燈",
@@ -363,7 +363,7 @@ let yakuList = [
     0,
     ["closed", "suits", "yakuman"]
   ),
-  new Yaku(
+  fourkan: new Yaku(
     "Four Quads",
     "Suukantsu",
     "四槓子",
@@ -373,7 +373,7 @@ let yakuList = [
     13,
     ["open", "triplets", "yakuman"]
   ),
-  new Yaku(
+  tenhou: new Yaku(
     "Blessing of Heaven",
     "Tenhou",
     "天和",
@@ -382,7 +382,7 @@ let yakuList = [
     0,
     ["closed", "yakuman", "lucky"]
   ),
-  new Yaku(
+  chihou: new Yaku(
     "Blessing of Earth",
     "Chihou",
     "地和",

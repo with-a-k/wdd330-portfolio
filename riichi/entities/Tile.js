@@ -24,7 +24,7 @@ export default class Tile {
         console.log('Tile number must be an integer');
         return false;
       }
-      if (this.variant === 'red' and this.number !== 5) {
+      if (this.variant === 'red' && this.number !== 5) {
         console.log('Only 5 tiles can be red');
         return false;
       }
@@ -40,10 +40,14 @@ export default class Tile {
     if (this.visibility = "closed") {
       let assetURL = `../assets/tiles/nohint/closed.svg`;
     } else {
-      let assetURL = `../assets/tiles/nohint/${this.number}${this.suit}${this.variant}.svg`;
+      let assetURL = `../assets/tiles/nohint/${this.type()}.svg`;
     }
     let tileHTML = document.createElement('div');
     let tileImage = document.createElement('img');
     let tileHint = document.createElement('div');
+  }
+
+  type() {
+    return `${this.number}${this.suit}${this.variant}`;
   }
 }

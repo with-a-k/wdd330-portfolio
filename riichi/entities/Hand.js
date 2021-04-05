@@ -1,13 +1,47 @@
-import Tile from './Hand.js';
+import Tile from './Tile.js';
+import Meld from './Meld.js';
+import { arrayToQuantities } from '../utility.js';
 
-class Hand() {
-  constructor(tilecodes) {
-
+export default class Hand {
+  constructor(closed, melds, agari) {
+    this.agari = agari;
+    this.closed = closed;
+    this.melds = melds;
   }
 
   calculate(conditions) {
+    //get finished hand versions
+    let closedString = this.closed.sort(function(t1, t2) {
+      return t1.type().slice(0,2) - t2.type().slice(0,2);
+    });
+    let simpleArray = this.closed.map(function(tile) {
+      return tile.type().slice(0,2);
+    })
+    let tx = 0;
+    let currentTile;
+    //closed tiles should be interpreted as whatever gives the hand maximum score
+
+
+  }
+
+  findPairs(simpleArray) {
+    let quantities = utilis.arrayToQuantities;
+    let pairCandidates = Object.keys(quantities).map(function(tc) {
+      //If there are more than 2 of an honor tile, that can't be the pair.
+      //Suit tiles can form straights, though, so 456|66 can still work.
+      return quantities[tc] > 1 && (!tc.includes('h') && quantities[tc] > 2);
+    });
+  }
+
+  score(conditions) {
     //check for yakuman formations
-    
+    if(conditions.timing = 'blessing') {
+      if(conditions.seat = 'east') {
+        this.scoredYaku.append(yakuList.tenhou);
+      } else {
+        this.scoredYaku.append(yakuList.chihou);
+      }
+    }
 
     //get fu and han
     let fu = this.getFu();
