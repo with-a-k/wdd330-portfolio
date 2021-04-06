@@ -9,7 +9,19 @@
   <body>
     <div id="tile-options">
       <div class="play-area">
-        <div class="dora-indicators">
+        <div class="top-section">
+          <div class="dora-indicators">
+            <div class="top-dora">
+            </div>
+            <div class="ura-dora">
+            </div>
+          </div>
+          <div class="tile-selector">
+            <div class="suit-select">
+            </div>
+            <div class="number-select">
+            </div>
+          </div>
         </div>
         <div class="hand">
           <div class="closed-tiles">
@@ -23,14 +35,14 @@
     </div>
     <div id="score-options">
       <form id="conditions">
-        <p class="condition-header">Current Round</p><br>
+        <p class="condition-header" id="header-round">Current Round</p>
           <input type="radio" id="round-east" name="round" value="east">
           <label for="east">East</label>
           <input type="radio" id="round-south" name="round" value="south">
           <label for="south">South</label>
           <input type="radio" id="round-west" name="round" value="west">
           <label for="west">West</label><br>
-        <p class="condition-header">Current Seating</p><br>
+        <p class="condition-header" id="header-seat">Current Seating</p>
           <input type="radio" id="seat-east" name="seat" value="east">
           <label for="east">East</label>
           <input type="radio" id="seat-south" name="seat" value="south">
@@ -39,12 +51,19 @@
           <label for="west">West</label>
           <input type="radio" id="seat-north" name="seat" value="north">
           <label for="north">North</label><br>
-        <p class="condition-header">Win Method</p><br>
+        <p class="condition-header" id="header-riichi">Riichi Type</p>
+          <input type="radio" id="dama" name="reach" value="dama">
+          <label for="no-riichi">No Riichi</label>
+          <input type="radio" id="riichi" name="reach" value="riichi">
+          <label for="riichi">Riichi</label>
+          <input type="radio" id="w-riichi" name="reach" value="wriichi">
+          <label for="double-riichi">Double Riichi</label>
+        <p class="condition-header" id="header-method">Win Method</p>
           <input type="radio" id="tsumo" name="method" value="tsumo">
           <label for="tsumo">Tsumo</label>
           <input type="radio" id="ron" name="method" value="ron">
           <label for="ron">Ron</label>
-        <p class="condition-header">Win Timing</p><br>
+        <p class="condition-header" id="header-timing">Win Timing</p>
           <input type="radio" id="normal" name="timing" value="normal">
           <label for="normal" id="l-normal">Normal</label>
           <input type="radio" id="blessing" name="timing" value="blessing">

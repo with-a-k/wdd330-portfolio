@@ -4,6 +4,9 @@ export default class Tile {
     this.number = number;
     this.variant = variant;
     this.visibility = visibility;
+    this.image = null;
+    this.hint = null;
+    this.container = null;
   }
 
   validate() {
@@ -37,17 +40,72 @@ export default class Tile {
   }
 
   display(target) {
-    if (this.visibility = "closed") {
-      let assetURL = `../assets/tiles/nohint/closed.svg`;
+    let assetURL, hintText;
+    if (this.visibility === "closed") {
+      assetURL = `./assets/tiles/nohint/closed.svg`;
     } else {
-      let assetURL = `../assets/tiles/nohint/${this.type()}.svg`;
+      assetURL = `./assets/tiles/nohint/${this.type()}.svg`;
+    }
+    if (this.visibility === "closed") {
+      hintText = '';
+    } else if (this.suit === 'h') {
+      hintText = this.expandHonor();
+    } else {
+      hintText = `${this.variant === 'r' ? 'Red ' : ''}${this.number} of ${this.expandSuit()}`;
     }
     let tileHTML = document.createElement('div');
     let tileImage = document.createElement('img');
-    let tileHint = document.createElement('div');
+    tileImage.src = assetURL;
+    if (this.image) {
+      this.image.src = assetURL;
+      this.hint.innerHTML = hintText;
+      return;
+    }
+    tileImage.classList.add('tile-image');
+    let tileHint = document.createElement('p');
+    tileHint.classList.add('tile-hint');
+    tileHint.innerHTML = hintText;
+    tileHTML.appendChild(tileImage);
+    tileHTML.appendChild(tileHint);
+    if (!this.container) {
+      this.container = target;
+      this.container.appendChild(tileHTML);
+    }
+    this.image = tileImage;
+    this.hint = tileHint;
+  }
+
+  expandHonor() {
+    return {
+      'E': 'East',
+      'S': 'South',
+      'W': 'West',
+      'N': 'North',
+      'H': 'White Dragon',
+      'G': 'Green Dragon',
+      'R': 'Red Dragon'
+    }[this.number];
+  }
+
+  expandSuit() {
+    return {
+      'm': 'Chars.',
+      's': 'Sticks',
+      'p': 'Wheels'
+    }[this.suit];
   }
 
   type() {
     return `${this.number}${this.suit}${this.variant}`;
+  }
+
+  open() {
+    this.visibility = 'open';
+    this.display();
+  }
+
+  close() {
+    this.visibility = "closed";
+    this.display();
   }
 }

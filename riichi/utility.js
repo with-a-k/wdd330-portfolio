@@ -10,6 +10,13 @@ function arrayToQuantities(array) {
   return quantities;
 }
 
+let possibleSuits = ['s','m','p','h'];
+let possibleHonors = ['E', 'S', 'W', 'N', 'H', 'G', 'R'];
+
+function realDora(indicator) {
+  
+}
+
 export {
-  arrayToQuantities
+  arrayToQuantities, possibleSuits, possibleHonors
 }

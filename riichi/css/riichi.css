@@ -66,3 +66,18 @@ label.disabled {
 .condition-header {
   color: #F8F260;
 }
+
+.top-dora {
+  display: grid;
+  grid-template-columns: repeat(5,0fr);
+}
+
+.ura-dora {
+  display: grid;
+  grid-template-columns: repeat(5,0fr);
+}
+
+.tile-hint {
+  text-align: center;
+  color: #5E7BB7;
+}
