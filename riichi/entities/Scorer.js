@@ -34,6 +34,7 @@ export default class Scorer {
       tile.display(document.querySelector('.closed-tiles'));
     });
     this.hand.agari.display(document.querySelector('.agari'));
+    this.animateDora();
   };
 
   startingDora() {
@@ -84,7 +85,7 @@ export default class Scorer {
         (variant === 'r' && rlvTileCount >= 1) ||
         (variant !== 'r' && number === 5 && rlvTileCount >= 3)) {
           //Too many of a kind
-          this.generateTile(destination);
+          this.generateTile(destination, vis);
       } else {
         this.tileCounts[tileCode]++;
         destination.push(new Tile(suit, number, variant, vis));
@@ -134,6 +135,7 @@ export default class Scorer {
     if(this.uraDoraEnabled) {
       this.openUraDora();
     }
+    this.animateDora();
   }
 
   openUraDora(upto = this.openDora) {
@@ -145,6 +147,7 @@ export default class Scorer {
         udi.close();
       }
     });
+    this.animateDora();
   }
 
   closeUraDora() {
@@ -152,6 +155,54 @@ export default class Scorer {
     this.doraInds.uraDora.forEach(function(udi, index) {
       udi.close();
     });
+    this.animateDora();
+  }
+
+  animateDora() {
+    //Causes a shine animation to play over dora tiles.
+    let dora = new Set(['5sr', '5mr', '5pr']);
+    let windDoraOrder = ['E', 'S', 'W', 'N'];
+    let dragonDoraOrder = ['H', 'G', 'R'];
+    let allDora = this.doraInds.topDora.concat(this.doraInds.uraDora);
+    //The dora indicators, confusingly, indicate that the next tile up
+    //is the dora, not that tile itself.
+    allDora.forEach((item, i) => {
+      if (item.visibility !== 'open') {
+        return;
+      }
+      if (item.suit === 'h') {
+        //Winds go in play order, so an East indicator means South is dora, etc.
+        if (windDoraOrder.includes(item.number)) {
+          while (windDoraOrder[0] !== item.number) {
+            windDoraOrder.push(windDoraOrder.shift());
+          }
+          dora.add(`${windDoraOrder[1]}h`);
+        } else {
+          //Dragons go in... whichever order this is. I'm not sure why.
+          while (dragonDoraOrder[0] !== item.number) {
+            dragonDoraOrder.push(dragonDoraOrder.shift());
+          }
+          dora.add(`${dragonDoraOrder[1]}h`);
+        }
+      } else {
+        //Meanwhile, numbers just add one or loop around.
+        dora.add(`${item.number+1 > 9 ? 1 : item.number+1}${item.suit}`);
+      }
+    });
+    this.hand.closed.forEach((item, i) => {
+      if (dora.has(item.type())) {
+        item.wrapper.classList.add('dora');
+      } else {
+        item.wrapper.classList.remove('dora');
+      }
+    });
+    //melds later
+    console.log(this.hand.agari);
+    if (dora.has(this.hand.agari.type())) {
+      this.hand.agari.wrapper.classList.add('dora');
+    } else {
+      this.hand.agari.wrapper.classList.remove('dora');
+    }
   }
 
   resetTiming(callback) {

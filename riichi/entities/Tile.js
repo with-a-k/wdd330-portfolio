@@ -6,6 +6,7 @@ export default class Tile {
     this.visibility = visibility;
     this.image = null;
     this.hint = null;
+    this.wrapper = null;
     this.container = null;
   }
 
@@ -54,6 +55,8 @@ export default class Tile {
       hintText = `${this.variant === 'r' ? 'Red ' : ''}${this.number} of ${this.expandSuit()}`;
     }
     let tileHTML = document.createElement('div');
+    let imageWrapper = document.createElement('div');
+    imageWrapper.classList.add('tile-wrapper');
     let tileImage = document.createElement('img');
     tileImage.src = assetURL;
     if (this.image) {
@@ -65,7 +68,8 @@ export default class Tile {
     let tileHint = document.createElement('p');
     tileHint.classList.add('tile-hint');
     tileHint.innerHTML = hintText;
-    tileHTML.appendChild(tileImage);
+    tileHTML.appendChild(imageWrapper);
+    imageWrapper.appendChild(tileImage);
     tileHTML.appendChild(tileHint);
     if (!this.container) {
       this.container = target;
@@ -73,6 +77,7 @@ export default class Tile {
     }
     this.image = tileImage;
     this.hint = tileHint;
+    this.wrapper = imageWrapper;
   }
 
   expandHonor() {
