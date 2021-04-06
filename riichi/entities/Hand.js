@@ -7,6 +7,28 @@ export default class Hand {
     this.agari = agari;
     this.closed = closed;
     this.melds = melds;
+    this.sortTiles();
+  }
+
+  sortTiles() {
+    let sortMapSuits = {
+      'm': 1,
+      'p': 2,
+      's': 3,
+      'h': 4
+    }
+    let sortMapHonors = {
+      'E': 1, 'S': 2, 'W': 3, 'N': 4, 'H': 5, 'G': 6, 'R': 7
+    }
+    this.closed = this.closed.sort(function(t1, t2) {
+      if (sortMapSuits[t1.suit] !== sortMapSuits[t2.suit]) {
+        return sortMapSuits[t1.suit] - sortMapSuits[t2.suit];
+      } else if (t1.suit == 'h') {
+        return sortMapHonors[t1.number] - sortMapHonors[t2.number];
+      } else {
+        return t1.number - t2.number;
+      }
+    });
   }
 
   calculate(conditions) {

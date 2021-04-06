@@ -9,7 +9,7 @@ export default class Scorer {
     this.tileCounts = {};
     this.doraInds = this.startingDora();
     this.openDora = 1;
-    this.hand = new Hand();
+    this.hand = this.assignHand();
     this.melds = [];
     this.uraDoraEnabled = false;
     let scorer = this;
@@ -30,6 +30,10 @@ export default class Scorer {
         scorer.manageKanDora();
       });
     });
+    this.hand.closed.forEach(function(tile, index) {
+      tile.display(document.querySelector('.closed-tiles'));
+    });
+    this.hand.agari.display(document.querySelector('.agari'));
   };
 
   startingDora() {
@@ -44,6 +48,17 @@ export default class Scorer {
       topDora: topDora,
       uraDora: uraDora
     }
+  }
+
+  assignHand() {
+    let closedContainer = [];
+    let agariContainer = [];
+    for(let i = 0; i < 13; i++) {
+      this.generateTile(closedContainer, 'open');
+    }
+    this.generateTile(agariContainer, 'open');
+    let hand = new Hand(closedContainer, [], agariContainer[0]);
+    return hand;
   }
 
   generateTile(destination, vis = 'closed') {

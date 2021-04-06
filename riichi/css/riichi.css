@@ -51,7 +51,7 @@
 /* http://paletton.com */
 
 body {
-  background-color: #105C04;
+  background-color: #083D00;
 }
 
 label {
@@ -75,6 +75,16 @@ label.disabled {
 .ura-dora {
   display: grid;
   grid-template-columns: repeat(5,0fr);
+}
+
+.closed-tiles {
+  display: grid;
+  grid-template-columns: repeat(13,0fr);
+}
+
+.agari {
+  display: grid;
+  grid-template-columns: 0fr;
 }
 
 .tile-hint {
