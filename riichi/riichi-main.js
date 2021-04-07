@@ -35,4 +35,22 @@ window.onload = function() {
     scorer.openUraDora();
   });
 
+  Array.from(document.querySelectorAll('.ss-option')).forEach(function (option) {
+    option.addEventListener('click', function (e) {
+      if (option.value === "h") {
+        document.querySelector('.honor-variants').hidden = false;
+        document.querySelector('.suit-numbers').hidden = true;
+      } else {
+        document.querySelector('.honor-variants').hidden = true;
+        document.querySelector('.suit-numbers').hidden = false;
+      }
+      scorer.alterCurrentlySelectedTile(option.value);
+    });
+  });
+
+  Array.from(document.querySelectorAll('.ns-option')).forEach(function (option) {
+    option.addEventListener('click', function (e) {
+      scorer.alterCurrentlySelectedTile(false, option.value[0], (option.value === '5r' ? 'r' : ''));
+    });
+  });
 }();

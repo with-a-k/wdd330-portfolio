@@ -12,6 +12,7 @@ export default class Scorer {
     this.hand = this.assignHand();
     this.melds = [];
     this.uraDoraEnabled = false;
+    this.selectedTile = null;
     let scorer = this;
     //Make dora indicators
     this.doraInds.topDora.forEach(function(tile, index) {
@@ -22,6 +23,9 @@ export default class Scorer {
         scorer.openDora = index+1;
         scorer.manageKanDora();
       });
+      tile.hint.addEventListener('click', function(e) {
+        scorer.changeSelectedTileTo(tile);
+      });
     });
     this.doraInds.uraDora.forEach(function(tile, index) {
       tile.display(document.querySelector('.ura-dora'));
@@ -29,11 +33,20 @@ export default class Scorer {
         scorer.openDora = index+1;
         scorer.manageKanDora();
       });
+      tile.hint.addEventListener('click', function(e) {
+        scorer.changeSelectedTileTo(tile);
+      });
     });
     this.hand.closed.forEach(function(tile, index) {
       tile.display(document.querySelector('.closed-tiles'));
+      tile.hint.addEventListener('click', function(e) {
+        scorer.changeSelectedTileTo(tile);
+      });
     });
     this.hand.agari.display(document.querySelector('.agari'));
+    this.hand.agari.hint.addEventListener('click', function(e) {
+      scorer.changeSelectedTileTo(scorer.hand.agari);
+    });
     this.animateDora();
   };
 
@@ -75,15 +88,13 @@ export default class Scorer {
         variant = (Math.random() < 0.25 ? 'r' : '');
       }
     }
-    tileCode = `${suit}${number}${variant}`;
+    tileCode = `${number}${suit}${variant}`;
     if (!this.tileCounts[tileCode]) {
       this.tileCounts[tileCode] = 1;
       destination.push(new Tile(suit, number, variant, vis));
     } else {
       rlvTileCount = this.tileCounts[tileCode];
-      if (rlvTileCount >= 4 ||
-        (variant === 'r' && rlvTileCount >= 1) ||
-        (variant !== 'r' && number === 5 && rlvTileCount >= 3)) {
+      if (this.checkTileCount(rlvTileCount)) {
           //Too many of a kind
           this.generateTile(destination, vis);
       } else {
@@ -191,18 +202,101 @@ export default class Scorer {
     });
     this.hand.closed.forEach((item, i) => {
       if (dora.has(item.type())) {
-        item.wrapper.classList.add('dora');
+        item.tiWrapper.classList.add('dora');
       } else {
-        item.wrapper.classList.remove('dora');
+        item.tiWrapper.classList.remove('dora');
       }
     });
     //melds later
-    console.log(this.hand.agari);
     if (dora.has(this.hand.agari.type())) {
-      this.hand.agari.wrapper.classList.add('dora');
+      this.hand.agari.tiWrapper.classList.add('dora');
     } else {
-      this.hand.agari.wrapper.classList.remove('dora');
+      this.hand.agari.tiWrapper.classList.remove('dora');
     }
+  }
+
+  checkTileCount(tileCode) {
+    let rlvTileCount = this.tileCounts[tileCode];
+    if (!rlvTileCount) {
+      this.tileCounts[tileCode] = 0;
+      return false;
+    }
+    return (rlvTileCount >= 4 ||
+      (tileCode[-1] === 'r' && rlvTileCount >= 1) ||
+      (tileCode[-1] !== 'r' && tileCode[0] === 5 && rlvTileCount >= 3));
+  }
+
+  handleSuitChange(event) {
+    try {
+      alterCurrentlySelectedTile(e.target.value);
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  alterCurrentlySelectedTile(newSuit = false, newNum = false, newVar = false) {
+    let selTile = this.selectedTile;
+    if (!newSuit) {
+      newSuit = selTile.suit;
+    }
+    if (!newNum) {
+      newNum = selTile.number;
+    }
+    if (!newVar) {
+      newVar = selTile.variant || '';
+    }
+    if (newSuit === 'h' && selTile.suit !== 'h') {
+      newNum = possibleHonors.find(honor => {
+        return !this.checkTileCount(`${honor}h`);
+      });
+    } else if (newSuit !== 'h' && selTile.suit === 'h') {
+      newNum = Array.from({length: 9}, (_, i) => i + 1).find(num => {
+        return !this.checkTileCount(`${num}${newSuit}`) || (num === 5 && !this.checkTileCount(`${num}${newSuit}r`));
+      });
+    }
+    let desiredTileCode = `${newNum ? newNum : selTile.number}${newSuit ? newSuit : selTile.suit}${newVar ? newVar : selTile.variant}`
+    if (this.checkTileCount(desiredTileCode)) {
+      throw new Error('Too many of this kind of tile are in play');
+    } else {
+      this.tileCounts[selTile.type()]--;
+      this.tileCounts[desiredTileCode]++;
+      selTile.suit = newSuit;
+      selTile.number = newNum;
+      selTile.variant = newVar;
+    }
+    this.reSortHand();
+    this.selectedTile.display();
+    this.animateDora();
+  }
+
+  reSortHand() {
+    let scorer = this;
+    this.hand.sortTiles();
+    document.querySelector('.closed-tiles').replaceChildren('');
+    this.hand.closed.forEach(function(tile, index) {
+      tile.container = null;
+      tile.display(document.querySelector('.closed-tiles'));
+      tile.hint.addEventListener('click', function(e) {
+        scorer.changeSelectedTileTo(tile);
+      });
+    });
+  }
+
+  changeSelectedTileTo(tile) {
+    if (this.selectedTile) {
+      this.selectedTile.hint.classList.remove('selected-tile');
+    }
+    if (tile.suit === 'h') {
+      document.querySelector('.honor-variants').hidden = false;
+      document.querySelector('.suit-numbers').hidden = true;
+    } else {
+      document.querySelector('.honor-variants').hidden = true;
+      document.querySelector('.suit-numbers').hidden = false;
+    }
+    tile.hint.classList.add('selected-tile');
+    document.querySelector(`#ss-${tile.suit}`).checked = true;
+    document.querySelector(`#ns-${tile.number}${tile.variant}`).checked = true;
+    this.selectedTile = tile;
   }
 
   resetTiming(callback) {

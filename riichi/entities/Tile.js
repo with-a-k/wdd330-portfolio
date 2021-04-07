@@ -6,7 +6,8 @@ export default class Tile {
     this.visibility = visibility;
     this.image = null;
     this.hint = null;
-    this.wrapper = null;
+    this.htWrapper = null;
+    this.tiWrapper = null;
     this.container = null;
   }
 
@@ -54,30 +55,41 @@ export default class Tile {
     } else {
       hintText = `${this.variant === 'r' ? 'Red ' : ''}${this.number} of ${this.expandSuit()}`;
     }
-    let tileHTML = document.createElement('div');
-    let imageWrapper = document.createElement('div');
-    imageWrapper.classList.add('tile-wrapper');
-    let tileImage = document.createElement('img');
-    tileImage.src = assetURL;
-    if (this.image) {
+    if (this.htWrapper) {
       this.image.src = assetURL;
       this.hint.innerHTML = hintText;
+      if (!this.container) {
+        if (!target) {
+          return;
+        }
+        target.appendChild(this.htWrapper);
+      }
       return;
+    }
+    let tileHTML = document.createElement('div');
+    let imagetiWrapper = document.createElement('div');
+    imagetiWrapper.classList.add('tile-tiWrapper');
+    let tileImage = document.createElement('img');
+    tileImage.src = assetURL;
+    if (target !== this.container || !this.container) {
+      if (this.container) {
+        this.container.removeChild(tileHTML);
+      }
+      this.container = target;
+      this.container.appendChild(tileHTML);
     }
     tileImage.classList.add('tile-image');
     let tileHint = document.createElement('p');
     tileHint.classList.add('tile-hint');
     tileHint.innerHTML = hintText;
-    tileHTML.appendChild(imageWrapper);
-    imageWrapper.appendChild(tileImage);
+    tileHTML.appendChild(imagetiWrapper);
+    imagetiWrapper.appendChild(tileImage);
     tileHTML.appendChild(tileHint);
-    if (!this.container) {
-      this.container = target;
-      this.container.appendChild(tileHTML);
-    }
+    this.container = target;
     this.image = tileImage;
     this.hint = tileHint;
-    this.wrapper = imageWrapper;
+    this.htWrapper = tileHTML;
+    this.tiWrapper = imagetiWrapper;
   }
 
   expandHonor() {

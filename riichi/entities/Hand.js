@@ -20,7 +20,7 @@ export default class Hand {
     let sortMapHonors = {
       'E': 1, 'S': 2, 'W': 3, 'N': 4, 'H': 5, 'G': 6, 'R': 7
     }
-    this.closed = this.closed.sort(function(t1, t2) {
+    this.closed.sort(function(t1, t2) {
       if (sortMapSuits[t1.suit] !== sortMapSuits[t2.suit]) {
         return sortMapSuits[t1.suit] - sortMapSuits[t2.suit];
       } else if (t1.suit == 'h') {

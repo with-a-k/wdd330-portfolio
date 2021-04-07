@@ -18,53 +18,87 @@
           </div>
           <div class="tile-selector">
             <div class="suit-select">
-              <input type="radio" id="ss-manzu">
-              <label for="characters">Characters</label>
-              <input type="radio" id="ss-pinzu">
-              <label for="wheels">Wheels</label>
-              <input type="radio" id="ss-souzu">
-              <label for="sticks">Sticks</label>
-              <input type="radio" id="ss-honors">
-              <label for="honors">Honors</label>
+              <input type="radio" class="ss-option" id="ss-m" name="suitselect" value="m">
+              <label class="ss-label" for="characters">Characters</label>
+              <input type="radio" class="ss-option" id="ss-p" name="suitselect" value="p">
+              <label class="ss-label" for="wheels">Wheels</label>
+              <input type="radio" class="ss-option" id="ss-s" name="suitselect" value="s">
+              <label class="ss-label" for="sticks">Sticks</label>
+              <input type="radio" class="ss-option" id="ss-h" name="suitselect" value="h">
+              <label class="ss-label" for="honors">Honors</label>
             </div>
             <div class="number-select">
               <div class="suit-numbers">
-                <input type="radio" id="ns-1">
-                <label for="1">1</label>
-                <input type="radio" id="ns-2">
-                <label for="2">2</label>
-                <input type="radio" id="ns-3">
-                <label for="3">3</label>
-                <input type="radio" id="ns-4">
-                <label for="4">4</label>
-                <input type="radio" id="ns-5">
-                <label for="5">5</label>
-                <input type="radio" id="ns-5r">
-                <label for="red-5">Red 5</label>
-                <input type="radio" id="ns-6">
-                <label for="6">6</label>
-                <input type="radio" id="ns-7">
-                <label for="7">7</label>
-                <input type="radio" id="ns-8">
-                <label for="8">8</label>
-                <input type="radio" id="ns-9">
-                <label for="9">9</label>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-1" name="numselect" value="1">
+                  <label for="1">1</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-2" name="numselect" value="2">
+                  <label for="2">2</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-3" name="numselect" value="3">
+                  <label for="3">3</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-4" name="numselect" value="4">
+                  <label for="4">4</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-5" name="numselect" value="5">
+                  <label for="5">5</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-5r" name="numselect" value="5r">
+                  <label for="red-5" class="red">R5</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-6" name="numselect" value="6">
+                  <label for="6">6</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-7" name="numselect" value="7">
+                  <label for="7">7</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-8" name="numselect" value="8">
+                  <label for="8">8</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-9" name="numselect" value="9">
+                  <label for="9">9</label>
+                </div>
               </div>
-              <div class="honor-variants">
-                <input type="radio" id="ton">
-                <label for="east">East</label>
-                <input type="radio" id="nan">
-                <label for="south">South</label>
-                <input type="radio" id="sha">
-                <label for="west">West</label>
-                <input type="radio" id="pei">
-                <label for="north">North</label>
-                <input type="radio" id="ns-5">
-                <label for="white-dragon">White Dragon</label>
-                <input type="radio" id="hatsu">
-                <label for="green-dragon">Green Dragon</label>
-                <input type="radio" id="chun">
-                <label for="red-dragon">Red Dragon</label>
+              <div class="honor-variants" hidden>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-E" name="honortype" value="E">
+                  <label for="east">East</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-S" name="honortype" value="S">
+                  <label for="south">South</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-W" name="honortype" value="W">
+                  <label for="west">West</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-N" name="honortype" value="N">
+                  <label for="north">North</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-H" name="honortype" value="H">
+                  <label for="white-dragon">White Dragon</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-G" name="honortype" value="G">
+                  <label for="green-dragon">Green Dragon</label>
+                </div>
+                <div class="to-option-group">
+                  <input type="radio" class="ns-option" id="ns-R" name="honortype" value="R">
+                  <label for="red-dragon">Red Dragon</label>
+                </div>
               </div>
             </div>
           </div>

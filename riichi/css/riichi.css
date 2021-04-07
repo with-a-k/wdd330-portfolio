@@ -67,6 +67,52 @@ label.disabled {
   color: #F8F260;
 }
 
+.top-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.tile-selector {
+  display: grid;
+  grid-template-columns: repeat(2, 2fr);
+  border: solid #C2BB13 2px;
+}
+
+.suit-select {
+  display: grid;
+  grid-template-rows: repeat(4, 12%);
+  width:20%;
+}
+
+.red {
+  color: #822;
+}
+
+.ss-label {
+  text-align: center;
+}
+
+.to-option-group > label {
+  text-align: center;
+}
+
+.suit-numbers {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: repeat(5, 20%);
+}
+
+.suit-numbers {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: repeat(4, 20%);
+}
+
+.hand {
+  display: grid;
+  grid-template-columns: 1fr, 0fr, 1fr;
+}
+
 .top-dora {
   display: grid;
   grid-template-columns: repeat(5,0fr);
@@ -87,7 +133,7 @@ label.disabled {
   grid-template-columns: 0fr;
 }
 
-.tile-wrapper {
+.tile-tiWrapper {
   position: relative;
   display: inline-block;
 }
@@ -97,14 +143,20 @@ label.disabled {
   color: #5E7BB7;
 }
 
-.tile-wrapper.dora::before {
+.selected-tile {
+  -webkit-animation: SelectedTileGlow 1s ease-in-out infinite alternate;
+  -moz-animation: SelectedTileGlow 1s ease-in-out infinite alternate;
+  animation: SelectedTileGlow 1s ease-in-out infinite alternate;
+}
+
+.tile-tiWrapper.dora::before {
   content: "";
   position: absolute;
   border-radius: 20%;
   width:100%;
   height:96%;
   -webkit-animation-name: ShineAnimation;
-  -webkit-animation-duration: 5s;
+  -webkit-animation-duration: 3s;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: cubic-bezier(.12,.89,.98,.47);
 
@@ -129,6 +181,15 @@ label.disabled {
     }
     to {
         background-repeat:no-repeat;
-        background-position:500px 500px;
+        background-position:400px 400px;
     }
+}
+
+@keyframes SelectedTileGlow {
+  from {
+    text-shadow: 0 0 10px #fff;
+  }
+  to {
+    text-shadow: 0 0 20px #fff;
+  }
 }
