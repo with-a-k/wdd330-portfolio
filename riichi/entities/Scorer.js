@@ -5,14 +5,17 @@ import { possibleSuits, possibleHonors } from '../utility.js';
 
 export default class Scorer {
 
-  constructor() {
+  constructor(numberSelector, honorSelector) {
     this.tileCounts = {};
     this.doraInds = this.startingDora();
     this.openDora = 1;
     this.hand = this.assignHand();
     this.melds = [];
     this.uraDoraEnabled = false;
-    this.selectedTile = null;
+    this.selectedTile = false;
+    this.numberSelector = numberSelector;
+    this.honorSelector = honorSelector;
+    this.changeNumberSelectView(honorSelector);
     let scorer = this;
     //Make dora indicators
     this.doraInds.topDora.forEach(function(tile, index) {
@@ -46,6 +49,16 @@ export default class Scorer {
     this.hand.agari.display(document.querySelector('.agari'));
     this.hand.agari.hint.addEventListener('click', function(e) {
       scorer.changeSelectedTileTo(scorer.hand.agari);
+    });
+    Array.from(numberSelector.querySelectorAll('.ns-option')).forEach(function (option) {
+      option.addEventListener('click', function (e) {
+        scorer.alterCurrentlySelectedTile(false, option.value[0], (option.value === '5r' ? 'r' : ''));
+      });
+    });
+    Array.from(honorSelector.querySelectorAll('.ns-option')).forEach(function (option) {
+      option.addEventListener('click', function (e) {
+        scorer.alterCurrentlySelectedTile(false, option.value[0], (option.value === '5r' ? 'r' : ''));
+      });
     });
     this.animateDora();
   };
@@ -235,6 +248,12 @@ export default class Scorer {
   }
 
   alterCurrentlySelectedTile(newSuit = false, newNum = false, newVar = false) {
+    this.changeNumberSelectView((newSuit === 'h' ||
+     (!newSuit && this.selectedTile.suit === 'h')) ?
+      this.honorSelector : this.numberSelector);
+    if (!this.selectedTile) {
+      return;
+    }
     let selTile = this.selectedTile;
     if (!newSuit) {
       newSuit = selTile.suit;
@@ -264,6 +283,8 @@ export default class Scorer {
       selTile.number = newNum;
       selTile.variant = newVar;
     }
+    document.querySelector(`#ss-${selTile.suit}`).checked = true;
+    document.querySelector(`#ns-${selTile.number}${selTile.variant}`).checked = true;
     this.reSortHand();
     this.selectedTile.display();
     this.animateDora();
@@ -272,27 +293,28 @@ export default class Scorer {
   reSortHand() {
     let scorer = this;
     this.hand.sortTiles();
-    document.querySelector('.closed-tiles').replaceChildren('');
+    document.querySelector('.closed-tiles').replaceChildren([]);
     this.hand.closed.forEach(function(tile, index) {
       tile.container = null;
       tile.display(document.querySelector('.closed-tiles'));
       tile.hint.addEventListener('click', function(e) {
         scorer.changeSelectedTileTo(tile);
+        document.querySelector(`#ss-${tile.suit}`).checked = true;
+        document.querySelector(`#ns-${tile.number}${tile.variant}`).checked = true;
       });
     });
+  }
+
+  changeNumberSelectView(to) {
+    document.querySelector('.number-select').replaceChildren([]);
+    document.querySelector('.number-select').appendChild(to);
   }
 
   changeSelectedTileTo(tile) {
     if (this.selectedTile) {
       this.selectedTile.hint.classList.remove('selected-tile');
     }
-    if (tile.suit === 'h') {
-      document.querySelector('.honor-variants').hidden = false;
-      document.querySelector('.suit-numbers').hidden = true;
-    } else {
-      document.querySelector('.honor-variants').hidden = true;
-      document.querySelector('.suit-numbers').hidden = false;
-    }
+    this.changeNumberSelectView(tile.suit === 'h' ? this.honorSelector : this.numberSelector);
     tile.hint.classList.add('selected-tile');
     document.querySelector(`#ss-${tile.suit}`).checked = true;
     document.querySelector(`#ns-${tile.number}${tile.variant}`).checked = true;
