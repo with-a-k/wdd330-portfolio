@@ -1,6 +1,7 @@
 import Hand from './Hand.js';
 import Meld from './Meld.js';
 import Tile from './Tile.js';
+import yakuList from '../data/YakuList.js';
 import { possibleSuits, possibleHonors } from '../utility.js';
 
 export default class Scorer {
@@ -53,14 +54,17 @@ export default class Scorer {
     Array.from(numberSelector.querySelectorAll('.ns-option')).forEach(function (option) {
       option.addEventListener('click', function (e) {
         scorer.alterCurrentlySelectedTile(false, option.value[0], (option.value === '5r' ? 'r' : ''));
+        scorer.score();
       });
     });
     Array.from(honorSelector.querySelectorAll('.ns-option')).forEach(function (option) {
       option.addEventListener('click', function (e) {
         scorer.alterCurrentlySelectedTile(false, option.value[0], (option.value === '5r' ? 'r' : ''));
+        scorer.score();
       });
     });
     this.animateDora();
+    this.score();
   };
 
   startingDora() {
@@ -182,6 +186,205 @@ export default class Scorer {
     this.animateDora();
   }
 
+  score() {
+    let scorer = this;
+    let possibilities = this.hand.isWellFormed();
+    let conditionForm = document.querySelector('form#conditions');
+    let conditions = {
+      round: conditionForm.elements.round.value,
+      seat: conditionForm.elements.seat.value,
+      reach: conditionForm.elements.reach.value,
+      method: conditionForm.elements.method.value,
+      timing: conditionForm.elements.timing.value
+    };
+    let defaultScore = {
+      yaku: [],
+      han: 0,
+      fu: 0,
+      name: 'No Yaku'
+    }
+    possibilities.reduce(function(maxScore, possibility) {
+      let score = {
+        tiles: possibility,
+        yaku: [],
+        han: 0,
+        fu: 0,
+        name: 'No Yaku'
+      };
+      if (possibility.special == 'orphans') {
+        let testYaku = [
+          yakuList.doubleorphans,
+          yakuList.orphans,
+          yakuList.tenhou,
+          yakuList.chihou
+        ];
+        while(testYaku[0]) {
+          checkingYaku = testYaku[0];
+          if (checkingYaku === yakuList.orphans && score.yaku.includes(yakuList.doubleorphans)) {
+          } else {
+            if (checkingYaku.checkFunction(possibility, conditions)) {
+              score.yaku.push(checkingYaku);
+            }
+          }
+          testYaku.shift();
+        }
+      } else if (possibility.special == 'pairs') {
+        let testYakuman = [
+          yakuList.tenhou,
+          yakuList.chihou,
+          yakuList.honors
+        ]
+        while(testYakuman[0]) {
+          checkingYaku = testYakuman[0];
+          if (checkingYaku === yakuList.orphans && score.yaku.includes(yakuList.doubleorphans)) {
+          } else {
+            if (checkingYaku.checkFunction(possibility, conditions)) {
+              score.yaku.push(checkingYaku);
+            }
+          }
+          testYakuman.shift();
+        }
+        if (score.yaku.length > 0) return;
+        let testYaku = [
+          yakuList.ryan,
+          yakuList.tsumo,
+          yakuList.riichi,
+          yakuList.wriichi,
+          yakuList.oneshot,
+          yakuList.simples,
+          yakuList.termnhon,
+          yakuList.halfflush,
+          yakuList.fullflush,
+          yakuList.rinshan,
+          yakuList.undersea,
+          yakuList.riverbed
+        ];
+        testYaku.forEach(function(yaku) {
+          if (checkingYaku.checkFunction(possibility, conditions)) {
+            score.yaku.push(checkingYaku);
+          }
+        });
+        if (!score.yaku.includes(yakuList.ryan)) {
+          score.yaku.push(yakuList.chiitoi);
+        }
+      } else {
+        let testYakuman = [
+          yakuList.tenhou,
+          yakuList.chihou,
+          yakuList.dsg,
+          yakuList.suuankoutanki,
+          yakuList.bigwind,
+          yakuList.smallwind,
+          yakuList.honors,
+          yakuList.green,
+          yakuList.terminals,
+          yakuList.puregates
+        ];
+        testYakuman.forEach(function(yaku) {
+          if (checkingYakuman.checkFunction(possibility, conditions)) {
+            score.yaku.push(checkingYakuman);
+          }
+        });
+        if (!score.yaku.includes(yakuList.suuankoutanki)) {
+          if (yakuList.suuankou.checkFunction(possibility, conditions)) {
+            score.yaku.push(yakuList.suuankou);
+          }
+        }
+        if (!score.yaku.includes(yakuList.puregates)) {
+          if (yakuList.gates.checkFunction(possibility, conditions)) {
+            score.yaku.push(yakuList.gates);
+          }
+        }
+        let testYaku = [
+          yakuList.tsumo,
+          yakuList.riichi,
+          yakuList.wriichi,
+          yakuList.oneshot,
+          yakuList.simples,
+          yakuList.pinfu,
+          yakuList.iipeikou,
+          yakuList.straight,
+          yakuList.seatWind,
+          yakuList.roundWind,
+          yakuList.hatsu,
+          yakuList.haku,
+          yakuList.chun,
+          yakuList.mixseq,
+          yakuList.mixtri,
+          yakuList.triplets,
+          yakuList.sanankou,
+          yakuList.halfout,
+          yakuList.outside,
+          yakuList.ssg,
+          yakuList.termnhon,
+          yakuList.halfflush,
+          yakuList.fullflush,
+          yakuList.rinshan,
+          yakuList.undersea,
+          yakuList.riverbed
+        ];
+        testYaku.forEach(function(yaku) {
+          if (checkingYaku.checkFunction(possibility, conditions)) {
+            score.yaku.push(checkingYaku);
+          }
+        });
+      }
+      if (score.yaku.length > 0) {
+        score.han = score.yaku.reduce(function(hn, yaku) {
+          return hn + yaku.closedHan;
+        }, 0);
+        if (score.yaku.some(function(yaku) {
+          return yaku.tags.includes('yakuman');
+        })) {
+          score.name = `${han/13 > 1 ? han/13 + 'x ' : ''}Yakuman`;
+        } else {
+          //get fu and han
+          score.fu = this.getFu(score.tiles);
+
+          let basePoints = fu * 2 ^ (2 + han);
+          //cap the base points
+          //13 han or more is a Composite Yakuman
+          if (han > 12) {
+            basePoints = 8000;
+            score.name = "Composite Yakuman";
+          //11 or 12 han is a Sanbaiman (3x mangan)
+          } else if (han > 10) {
+            basePoints = 6000;
+            score.name = "Sanbaiman";
+          //8-10 han is a Baiman (2x mangan)
+          } else if (han > 7) {
+            basePoints = 4000;
+            score.name = "Baiman";
+          //6-7 han is a Haneman (1.5x mangan)
+          } else if (han > 5) {
+            basePoints = 3000;
+            score.name = "Haneman";
+          //5 han, or a hand with less than 5 han but a lot of fu, is Mangan
+          } else if (han === 5 || basePoints > 2000) {
+            basePoints = 2000;
+            score.name = "Mangan";
+          //otherwise, score it normally
+          } else {
+            score.name = "";
+          }
+        //determine the final score from the conditions
+          if (conditions['seat'] === 'east') {
+            //Dealer Wins
+            finalScore = basePoints * 6;
+          } else {
+            finalScore = basePoints * 4;
+          }
+        }
+      } else {
+        //No-Yaku hand can't score
+      }
+    }, defaultScore);
+  }
+
+  getFu(tiles) {
+    console.log(tiles);
+  }
+
   animateDora() {
     //Causes a shine animation to play over dora tiles.
     let dora = new Set(['5sr', '5mr', '5pr']);
@@ -214,14 +417,14 @@ export default class Scorer {
       }
     });
     this.hand.closed.forEach((item, i) => {
-      if (dora.has(item.type())) {
+      if (dora.has(item.type)) {
         item.tiWrapper.classList.add('dora');
       } else {
         item.tiWrapper.classList.remove('dora');
       }
     });
     //melds later
-    if (dora.has(this.hand.agari.type())) {
+    if (dora.has(this.hand.agari.type)) {
       this.hand.agari.tiWrapper.classList.add('dora');
     } else {
       this.hand.agari.tiWrapper.classList.remove('dora');
@@ -239,14 +442,6 @@ export default class Scorer {
       (tileCode[-1] !== 'r' && tileCode[0] === 5 && rlvTileCount >= 3));
   }
 
-  handleSuitChange(event) {
-    try {
-      alterCurrentlySelectedTile(e.target.value);
-    } catch(e) {
-      console.log(e);
-    }
-  }
-
   alterCurrentlySelectedTile(newSuit = false, newNum = false, newVar = false) {
     this.changeNumberSelectView((newSuit === 'h' ||
      (!newSuit && this.selectedTile.suit === 'h')) ?
@@ -255,15 +450,13 @@ export default class Scorer {
       return;
     }
     let selTile = this.selectedTile;
-    if (!newSuit) {
-      newSuit = selTile.suit;
+    newSuit = newSuit ? newSuit : selTile.suit;
+    newNum = newNum ? newNum : selTile.number;
+    if (!Number.isNaN(parseInt(newNum))) {
+      newNum = parseInt(newNum);
     }
-    if (!newNum) {
-      newNum = selTile.number;
-    }
-    if (!newVar) {
-      newVar = selTile.variant || '';
-    }
+    newVar = newVar ? newVar : (newNum === 5 ? selTile.variant : '');
+
     if (newSuit === 'h' && selTile.suit !== 'h') {
       newNum = possibleHonors.find(honor => {
         return !this.checkTileCount(`${honor}h`);
@@ -277,7 +470,7 @@ export default class Scorer {
     if (this.checkTileCount(desiredTileCode)) {
       throw new Error('Too many of this kind of tile are in play');
     } else {
-      this.tileCounts[selTile.type()]--;
+      this.tileCounts[selTile.type]--;
       this.tileCounts[desiredTileCode]++;
       selTile.suit = newSuit;
       selTile.number = newNum;

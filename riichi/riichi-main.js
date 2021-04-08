@@ -39,6 +39,7 @@ window.onload = function() {
   Array.from(document.querySelectorAll('.ss-option')).forEach(function (option) {
     option.addEventListener('click', function (e) {
       scorer.alterCurrentlySelectedTile(option.value);
+      scorer.score();
     });
   });
 }();

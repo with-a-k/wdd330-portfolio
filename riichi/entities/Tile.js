@@ -9,6 +9,12 @@ export default class Tile {
     this.htWrapper = null;
     this.tiWrapper = null;
     this.container = null;
+    Object.defineProperty(this, 'type', {
+      get() {return `${this.number}${this.suit}${this.variant}`}
+    });
+    Object.defineProperty(this, 'nvType', {
+      get() {return `${this.number}${this.suit}`}
+    });
   }
 
   validate() {
@@ -46,7 +52,7 @@ export default class Tile {
     if (this.visibility === "closed") {
       assetURL = `./assets/tiles/nohint/closed.svg`;
     } else {
-      assetURL = `./assets/tiles/nohint/${this.type()}.svg`;
+      assetURL = `./assets/tiles/nohint/${this.type}.svg`;
     }
     if (this.visibility === "closed") {
       hintText = '';
@@ -110,10 +116,6 @@ export default class Tile {
       's': 'Sticks',
       'p': 'Wheels'
     }[this.suit];
-  }
-
-  type() {
-    return `${this.number}${this.suit}${this.variant}`;
   }
 
   open() {
