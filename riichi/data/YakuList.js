@@ -395,7 +395,12 @@ let yakuDict = {
     the player that discarded into the last triplet is subject to the payment.`,
     13,
     13,
-    ["open", "honors", "liability", "yakuman"]
+    ["open", "honors", "liability", "yakuman"],
+    function checkDSG(possibility, condition) {
+      return possibility.blocks.map(function(block) {
+        
+      });
+    }
   ),
   suuankou: new Yaku(
     "Four Concealed Triplets",

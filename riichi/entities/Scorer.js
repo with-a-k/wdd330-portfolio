@@ -271,51 +271,51 @@ export default class Scorer {
         let testYakuman = [
           yakuList.tenhou,
           yakuList.chihou,
-          yakuList.dsg,
-          yakuList.suuankoutanki,
-          yakuList.bigwind,
-          yakuList.smallwind,
-          yakuList.honors,
-          yakuList.green,
-          yakuList.terminals,
-          yakuList.puregates
+          //yakuList.dsg,
+          //yakuList.suuankoutanki,
+          //yakuList.bigwind,
+          //yakuList.smallwind,
+          //yakuList.honors,
+          //yakuList.green,
+          //yakuList.terminals,
+          //yakuList.puregates
         ];
         testYakuman.forEach(function(yaku) {
-          if (checkingYakuman.checkFunction(possibility, conditions)) {
-            score.yaku.push(checkingYakuman);
+          if (yaku.checkFunction(possibility, conditions)) {
+            score.yaku.push(yaku);
           }
         });
-        if (!score.yaku.includes(yakuList.suuankoutanki)) {
-          if (yakuList.suuankou.checkFunction(possibility, conditions)) {
-            score.yaku.push(yakuList.suuankou);
-          }
-        }
-        if (!score.yaku.includes(yakuList.puregates)) {
-          if (yakuList.gates.checkFunction(possibility, conditions)) {
-            score.yaku.push(yakuList.gates);
-          }
-        }
+        //if (!score.yaku.includes(yakuList.suuankoutanki)) {
+        //  if (yakuList.suuankou.checkFunction(possibility, conditions)) {
+        //    score.yaku.push(yakuList.suuankou);
+        //  }
+        //}
+        //if (!score.yaku.includes(yakuList.puregates)) {
+        //  if (yakuList.gates.checkFunction(possibility, conditions)) {
+        //    score.yaku.push(yakuList.gates);
+        //  }
+        //}
         let testYaku = [
           yakuList.tsumo,
           yakuList.riichi,
           yakuList.wriichi,
           yakuList.oneshot,
           yakuList.simples,
-          yakuList.pinfu,
-          yakuList.iipeikou,
-          yakuList.straight,
-          yakuList.seatWind,
-          yakuList.roundWind,
-          yakuList.hatsu,
-          yakuList.haku,
-          yakuList.chun,
-          yakuList.mixseq,
-          yakuList.mixtri,
-          yakuList.triplets,
-          yakuList.sanankou,
-          yakuList.halfout,
-          yakuList.outside,
-          yakuList.ssg,
+          //yakuList.pinfu,
+          //yakuList.iipeikou,
+          //yakuList.straight,
+          //yakuList.seatWind,
+          //yakuList.roundWind,
+          //yakuList.hatsu,
+          //yakuList.haku,
+          //yakuList.chun,
+          //yakuList.mixseq,
+          //yakuList.mixtri,
+          //yakuList.triplets,
+          //yakuList.sanankou,
+          //yakuList.halfout,
+          //yakuList.outside,
+          //yakuList.ssg,
           yakuList.termnhon,
           yakuList.halfflush,
           yakuList.fullflush,
@@ -324,8 +324,8 @@ export default class Scorer {
           yakuList.riverbed
         ];
         testYaku.forEach(function(yaku) {
-          if (checkingYaku.checkFunction(possibility, conditions)) {
-            score.yaku.push(checkingYaku);
+          if (yaku.checkFunction(possibility, conditions)) {
+            score.yaku.push(yaku);
           }
         });
       }
