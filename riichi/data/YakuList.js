@@ -96,7 +96,15 @@ let yakuDict = {
     and the pair cannot be a tile type that would qualify for yakuhai.`,
     1,
     0,
-    ["closed", "sequences"]
+    ["closed", "sequences"],
+    function checkPinfu(possibility, conditions) {
+      let allTiles = possibility.pair.concat(possibility.blocks.reduce(function(acc, block) {
+        acc.concat(block.tiles);
+      }, []));
+      return allCondition(allTiles, function(tile) {
+        return isTileSimple(tile);
+      });
+    }
   ),
   iipeikou: new Yaku(
     "Twin Sequences",
@@ -398,7 +406,7 @@ let yakuDict = {
     ["open", "honors", "liability", "yakuman"],
     function checkDSG(possibility, condition) {
       return possibility.blocks.map(function(block) {
-        
+
       });
     }
   ),

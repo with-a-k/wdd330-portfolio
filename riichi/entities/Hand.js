@@ -65,6 +65,7 @@ export default class Hand {
         pair: [],
         blocks: pairs,
         agari: this.agari.type,
+        closed: this.closed,
         special: 'pairs'
       };
     } else if (pairs.length === 0) {
@@ -137,7 +138,8 @@ export default class Hand {
         //well-formed!
         finished.push({
           pair: pair,
-          blocks: blocks
+          blocks: blocks,
+          closed: closed
         });
       } else {
         //not well-formed.

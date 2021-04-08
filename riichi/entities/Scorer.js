@@ -198,7 +198,7 @@ export default class Scorer {
       timing: conditionForm.elements.timing.value
     };
     let defaultScore = {
-      yaku: [],
+      yakuScored: [],
       han: 0,
       fu: 0,
       name: 'No Yaku'
@@ -206,45 +206,39 @@ export default class Scorer {
     possibilities.reduce(function(maxScore, possibility) {
       let score = {
         tiles: possibility,
-        yaku: [],
+        yakuScored: [],
         han: 0,
         fu: 0,
         name: 'No Yaku'
       };
       if (possibility.special == 'orphans') {
         let testYaku = [
-          yakuList.doubleorphans,
-          yakuList.orphans,
           yakuList.tenhou,
           yakuList.chihou
         ];
-        while(testYaku[0]) {
-          checkingYaku = testYaku[0];
-          if (checkingYaku === yakuList.orphans && score.yaku.includes(yakuList.doubleorphans)) {
-          } else {
-            if (checkingYaku.checkFunction(possibility, conditions)) {
-              score.yaku.push(checkingYaku);
-            }
+        testYaku.forEach(function(yaku) {
+          if (yaku.checkFunction(possibility, conditions)) {
+            score.yakuScored.push(yaku);
           }
-          testYaku.shift();
+        });
+        if (score.yakuScored.includes(yakuList.tenhou) || yakuList.doubleorphans.checkFunction(possibility, conditions)) {
+          //Tenhou thirteen orphans is always 13-way wait.
+          score.yakuScored.push(yakuList.doubleorphans);
+        } else {
+          score.yakuScored.push(yakuList.orphans);
         }
       } else if (possibility.special == 'pairs') {
         let testYakuman = [
           yakuList.tenhou,
           yakuList.chihou,
           yakuList.honors
-        ]
-        while(testYakuman[0]) {
-          checkingYaku = testYakuman[0];
-          if (checkingYaku === yakuList.orphans && score.yaku.includes(yakuList.doubleorphans)) {
-          } else {
-            if (checkingYaku.checkFunction(possibility, conditions)) {
-              score.yaku.push(checkingYaku);
-            }
+        ];
+        testYakuman.forEach(yakuman => {
+          if (yakuman.checkFunction(possibility, conditions)) {
+            score.yakuScored.push(yakuman);
           }
-          testYakuman.shift();
-        }
-        if (score.yaku.length > 0) return;
+        });
+        if (score.yakuScored.length > 0) return;
         let testYaku = [
           yakuList.ryan,
           yakuList.tsumo,
@@ -253,6 +247,8 @@ export default class Scorer {
           yakuList.oneshot,
           yakuList.simples,
           yakuList.termnhon,
+          //yakuList.halfout,
+          //yakuList.outside,
           yakuList.halfflush,
           yakuList.fullflush,
           yakuList.rinshan,
@@ -260,12 +256,12 @@ export default class Scorer {
           yakuList.riverbed
         ];
         testYaku.forEach(function(yaku) {
-          if (checkingYaku.checkFunction(possibility, conditions)) {
-            score.yaku.push(checkingYaku);
+          if (yaku.checkFunction(possibility, conditions)) {
+            score.yakuScored.push(yaku);
           }
         });
-        if (!score.yaku.includes(yakuList.ryan)) {
-          score.yaku.push(yakuList.chiitoi);
+        if (!score.yakuScored.includes(yakuList.ryan)) {
+          score.yakuScored.push(yakuList.chiitoi);
         }
       } else {
         let testYakuman = [
@@ -282,17 +278,17 @@ export default class Scorer {
         ];
         testYakuman.forEach(function(yaku) {
           if (yaku.checkFunction(possibility, conditions)) {
-            score.yaku.push(yaku);
+            score.yakuScored.push(yaku);
           }
         });
-        //if (!score.yaku.includes(yakuList.suuankoutanki)) {
+        //if (!score.yakuScored.includes(yakuList.suuankoutanki)) {
         //  if (yakuList.suuankou.checkFunction(possibility, conditions)) {
-        //    score.yaku.push(yakuList.suuankou);
+        //    score.yakuScored.push(yakuList.suuankou);
         //  }
         //}
-        //if (!score.yaku.includes(yakuList.puregates)) {
+        //if (!score.yakuScored.includes(yakuList.puregates)) {
         //  if (yakuList.gates.checkFunction(possibility, conditions)) {
-        //    score.yaku.push(yakuList.gates);
+        //    score.yakuScored.push(yakuList.gates);
         //  }
         //}
         let testYaku = [
@@ -325,21 +321,21 @@ export default class Scorer {
         ];
         testYaku.forEach(function(yaku) {
           if (yaku.checkFunction(possibility, conditions)) {
-            score.yaku.push(yaku);
+            score.yakuScored.push(yaku);
           }
         });
       }
-      if (score.yaku.length > 0) {
-        score.han = score.yaku.reduce(function(hn, yaku) {
+      if (score.yakuScored.length > 0) {
+        score.han = score.yakuScored.reduce(function(hn, yaku) {
           return hn + yaku.closedHan;
         }, 0);
-        if (score.yaku.some(function(yaku) {
+        if (score.yakuScored.some(function(yaku) {
           return yaku.tags.includes('yakuman');
         })) {
           score.name = `${han/13 > 1 ? han/13 + 'x ' : ''}Yakuman`;
         } else {
           //get fu and han
-          score.fu = this.getFu(score.tiles);
+          score.fu = this.getFu(score);
 
           let basePoints = fu * 2 ^ (2 + han);
           //cap the base points
@@ -381,8 +377,8 @@ export default class Scorer {
     }, defaultScore);
   }
 
-  getFu(tiles) {
-    console.log(tiles);
+  getFu(score) {
+    console.log(score);
   }
 
   animateDora() {
